@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Button from '../UI/Button';
+import ErrorModal from '../UI/ErrorModal';
 
 const AddUser = (props) => {
   const [newUser, setNewUser] = useState('');
@@ -35,6 +36,7 @@ const AddUser = (props) => {
         <input type='number' id='age' value={newAge} title='age' onChange={ageChangeHandler} placeholder='Age in years' className='p-2 border border-solid border-slate-400' />
         <Button type='submit' />
       </form>
+      <ErrorModal />
     </div>
   )
 }
