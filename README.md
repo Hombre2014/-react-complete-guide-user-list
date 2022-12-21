@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Section 8, challenge 3 - create Users List
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
