@@ -1,0 +1,46 @@
+.label {
+  font-weight: bold;
+  margin: 0.5rem 0;
+}
+
+.input {
+  font-weight: bold;
+  height: 2.2rem;
+  padding-left: 0.5rem;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.list {
+  padding: 0 2rem;
+}
+
+.list:last-child {
+  padding-bottom: 1rem;
+}
+
+.paragraph {
+  margin-bottom: 0.5rem;
+  border: 1px solid gray;
+  height: 2.2rem;
+  padding-top: 0.6rem;
+  padding-left: 0.5rem;
+  font-weight: 600;
+}
+
+.add {
+  background-color: blueviolet;
+  width: fit-content;
+  margin: 0 0 2rem 2rem;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+}
+
+.add:hover {
+  background-color: rgb(155, 67, 238);
+}
