@@ -1,62 +1,71 @@
 import React, { useState } from 'react';
+
 import Card from '../UI/Card';
-import styles from './AddUser.module.css';
 import Button from '../UI/Button';
 import ErrorModal from '../UI/ErrorModal';
+import classes from './AddUser.module.css';
 
 const AddUser = (props) => {
-  const [userName, setUserName] = useState('');
-  const [age, setAge] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [enteredUsername, setEnteredUsername] = useState('');
+  const [enteredAge, setEnteredAge] = useState('');
+  const [error, setError] = useState();
 
   const addUserHandler = (event) => {
     event.preventDefault();
-
-    if (age === '' || userName === '') {
-      console.log('Age: ', age, "UserName: ", userName);
-      setIsOpen(true);
-      console.log('isOpen: ', isOpen);
-      return (
-        <>
-          {isOpen && <ErrorModal inputAlert={'Username and/or Age can not be empty!'} setIsOpen={true} />}
-        </>
-      )
+    if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      setError({
+        title: 'Invalid input',
+        message: 'Please enter a valid name and age (non-empty values).'
+      });
+      return;
     }
-
-    const enteredAge = parseInt(age);
-    if (enteredAge < 0) {
-      return (
-        <>
-          {isOpen && <ErrorModal inputAlert={'Age must be > 0!'} setIsOpen={true} />}
-        </>
-      )
+    if (+enteredAge < 1) {
+      setError({
+        title: 'Invalid age',
+        message: 'Please enter a valid age (>0).'
+      });
+      return;
     }
+    props.onAddUser(enteredUsername, enteredAge);
+    setEnteredUsername('');
+    setEnteredAge('');
+  };
 
-    const userData = {
-      userName,
-      age
-    }
+  const usernameChangeHandler = (event) => {
+    setEnteredUsername(event.target.value);
+  };
 
-    console.log("UserData: ", userData);
-    props.onSaveUserData(userData);
-    setAge('');
-    setUserName('')
+  const ageChangeHandler = (event) => {
+    setEnteredAge(event.target.value);
+  };
+
+  const errorHandler = () => {
+    setError(null);
   }
 
   return (
-    <Card>
-      <form>
-        <div className={styles.inner}>
-          <label htmlFor="name" className={styles.label}>Username</label>
-          <input type='text' name='name' className={styles.input} value={userName} onChange={(event) => setUserName(event.target.value)} />
-          <label htmlFor="years" className={styles.label}>Age (years)</label>
-          <input type='number' name='years' className={styles.input} value={age} onChange={(event) => setAge(event.target.value)} />
-        </div>
-        <Button type='submit' className={styles.add} onClick={addUserHandler}>
-          Add User
-        </Button>
-      </form>
-    </Card>
+    <div>
+      {error && <ErrorModal title={error.title} message={error.message} onConfirm={errorHandler} />}
+      <Card className={classes.input}>
+        <form onSubmit={addUserHandler}>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            value={enteredUsername}
+            onChange={usernameChangeHandler}
+          />
+          <label htmlFor="age">Age (Years)</label>
+          <input
+            id="age"
+            type="number"
+            value={enteredAge}
+            onChange={ageChangeHandler}
+          />
+          <Button type="submit">Add User</Button>
+        </form>
+      </Card>
+    </div>
   );
 };
 

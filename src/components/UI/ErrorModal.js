@@ -1,27 +1,26 @@
 import React from 'react';
-import styles from './ErrorModal.module.css';
+
+import Card from './Card';
 import Button from './Button';
+import classes from './ErrorModal.module.css';
 
 const ErrorModal = (props) => {
   return (
-    <div className={styles.darkBG} onClick={() => props.setIsOpen(false)}>
-      <div className={styles.centered}>
-        <div className={styles.modal}>
-          <div className={styles.modalContent}>
-            <div className={styles.modalHeader}>
-              <h2>Invalid input</h2>
-            </div>
-            <p>{props.inputAlert}</p>
-          </div>
-          <div className={styles.modalFooter}>
-            <Button onClick={() => props.setIsOpen(false)} className={styles.add} >
-              Okay
-            </Button>
-          </div>
+    <div>
+      <div className={classes.backdrop} onClick={props.onConfirm} />
+      <Card className={classes.modal}>
+        <header className={classes.header}>
+          <h2>{props.title}</h2>
+        </header>
+        <div className={classes.content}>
+          <p>{props.message}</p>
         </div>
-      </div>
+        <footer className={classes.actions}>
+          <Button onClick={props.onConfirm}>Okay</Button>
+        </footer>
+      </Card>
     </div>
-  )
-}
+  );
+};
 
 export default ErrorModal;
